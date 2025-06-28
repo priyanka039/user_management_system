@@ -18,6 +18,8 @@ let legalEntities = [
   },
 ];
 
+// Import and use the new mockApi.js endpoints for legal entities
+
 function makeResponse(data, message = 'Success', success = true) {
   return {
     success,

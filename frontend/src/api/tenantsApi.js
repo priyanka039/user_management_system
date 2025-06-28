@@ -90,4 +90,6 @@ export async function deleteTenant(id) {
     return makeResponse(null, 'Tenant not found', false);
   }
   return makeResponse(null, 'Tenant deleted');
-} 
+}
+
+// Import and use the new mockApi.js endpoints for tenants 

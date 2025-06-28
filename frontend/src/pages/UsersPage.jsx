@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers, createUser, editUser, removeUser } from '../app/usersSlice';
-import { Box, Button, Typography, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, TextField, IconButton } from '@mui/material';
+import { Box, Button, Typography, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, TextField, IconButton, Alert } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,14 +11,15 @@ const defaultForm = { email: '', first_name: '', last_name: '', organization_id:
 
 const UsersPage = () => {
   const dispatch = useDispatch();
-  const { items, loading } = useSelector((state) => state.users);
+  const { items, loading, error } = useSelector((state) => state.users);
+  const tenant_id = useSelector((state) => state.auth.user?.tenant_id);
   const [open, setOpen] = React.useState(false);
   const [editId, setEditId] = React.useState(null);
   const [form, setForm] = React.useState(defaultForm);
 
   React.useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
+    if (tenant_id) dispatch(fetchUsers(tenant_id));
+  }, [dispatch, tenant_id]);
 
   const handleOpen = (user) => {
     setEditId(user ? user.id : null);
@@ -38,15 +39,15 @@ const UsersPage = () => {
 
   const handleSubmit = () => {
     if (editId) {
-      dispatch(editUser({ id: editId, updates: form }));
+      dispatch(editUser({ tenant_id, id: editId, updates: form }));
     } else {
-      dispatch(createUser(form));
+      dispatch(createUser({ tenant_id, user: form }));
     }
     handleClose();
   };
 
   const handleDelete = (id) => {
-    dispatch(removeUser(id));
+    dispatch(removeUser({ tenant_id, id }));
   };
 
   const columns = [
@@ -84,6 +85,7 @@ const UsersPage = () => {
           Add User
         </Button>
       </Box>
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       {loading ? (
         <Box display="flex" justifyContent="center" alignItems="center" minHeight={200}>
           <CircularProgress />

@@ -1,16 +1,15 @@
-import OrganizationsPage from './pages/OrganizationsPage';
-import UsersPage from './pages/UsersPage';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import AppLayout from './layouts/AppLayout';
 import Dashboard from './pages/Dashboard';
 import TenantsPage from './pages/TenantsPage';
+import OrganizationsPage from './pages/OrganizationsPage';
+import UsersPage from './pages/UsersPage';
 import LoginPage from './pages/LoginPage';
 import RolesPage from './pages/RolesPage';
 import PrivilegesPage from './pages/PrivilegesPage';
 import LegalEntitiesPage from './pages/LegalEntitiesPage';
-
-// Temporary RequireAuth placeholder
-const RequireAuth = ({ children }) => children;
+import ProtectedRoute from './components/ProtectedRoute';
 
 function AppRoutes() {
   return (
@@ -19,75 +18,79 @@ function AppRoutes() {
       <Route
         path="/"
         element={
-          <RequireAuth>
+          <ProtectedRoute>
             <AppLayout>
               <Dashboard />
             </AppLayout>
-          </RequireAuth>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/tenants"
         element={
-          <RequireAuth>
+          <ProtectedRoute>
             <AppLayout>
               <TenantsPage />
             </AppLayout>
-          </RequireAuth>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/organizations"
         element={
-          <RequireAuth>
+          <ProtectedRoute>
             <AppLayout>
               <OrganizationsPage />
             </AppLayout>
-          </RequireAuth>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/users"
         element={
-          <RequireAuth>
+          <ProtectedRoute>
             <AppLayout>
               <UsersPage />
             </AppLayout>
-          </RequireAuth>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/roles"
         element={
-          <RequireAuth>
+          <ProtectedRoute>
             <AppLayout>
               <RolesPage />
             </AppLayout>
-          </RequireAuth>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/privileges"
         element={
-          <RequireAuth>
+          <ProtectedRoute>
             <AppLayout>
               <PrivilegesPage />
             </AppLayout>
-          </RequireAuth>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/legal-entities"
         element={
-          <RequireAuth>
+          <ProtectedRoute>
             <AppLayout>
               <LegalEntitiesPage />
             </AppLayout>
-          </RequireAuth>
+          </ProtectedRoute>
         }
       />
     </Routes>
   );
 }
 
-export default AppRoutes; 
+function App() {
+  return <AppRoutes />;
+}
+
+export default App; 

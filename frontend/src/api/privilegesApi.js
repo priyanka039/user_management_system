@@ -22,6 +22,8 @@ let privileges = [
   },
 ];
 
+// Import and use the new mockApi.js endpoints for privileges
+
 function makeResponse(data, message = 'Success', success = true) {
   return {
     success,

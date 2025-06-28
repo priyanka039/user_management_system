@@ -26,6 +26,8 @@ let users = [
   },
 ];
 
+// Import and use the new mockApi.js endpoints for users
+
 function makeResponse(data, message = 'Success', success = true) {
   return {
     success,

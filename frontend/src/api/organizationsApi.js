@@ -30,6 +30,8 @@ let organizations = [
   },
 ];
 
+// Import and use the new mockApi.js endpoints for organizations
+
 function makeResponse(data, message = 'Success', success = true) {
   return {
     success,

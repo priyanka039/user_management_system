@@ -1,25 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Toolbar } from '@mui/material';
 import Sidebar from './Sidebar';
 import AppBar from './AppBar';
-import { useDispatch } from 'react-redux';
-import { logout } from '../app/authSlice';
-import { useNavigate } from 'react-router-dom';
+
+const drawerWidth = 220;
 
 const AppLayout = ({ children }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/login');
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar />
-      <Sidebar onLogout={handleLogout} />
-      <Box component="main" sx={{ flexGrow: 1, bgcolor: '#fafbfc', minHeight: '100vh', p: 3 }}>
+      <AppBar onMenuClick={handleDrawerToggle} />
+      <Sidebar mobileOpen={mobileOpen} onDrawerToggle={handleDrawerToggle} />
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          bgcolor: '#fafbfc',
+          minHeight: '100vh',
+          p: 3,
+          ml: { md: `${drawerWidth}px` },
+        }}
+      >
         <Toolbar />
         {children}
       </Box>
